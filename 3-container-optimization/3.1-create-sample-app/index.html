@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.7">
+    <meta name="description" content="AWS Lambda Container Images Performance Optimization Workshop">
+<meta name="author" content="anhzvang2605@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Create Sample Application :: AWS Lambda Container Images Performance Optimization</title>
+
+    
+    <link href="/css/nucleus.css?1752648523" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1752648523" rel="stylesheet">
+    <link href="/css/hybrid.css?1752648523" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1752648523" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1752648523" rel="stylesheet">
+    <link href="/css/auto-complete.css?1752648523" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1752648523" rel="stylesheet">
+    <link href="/css/theme.css?1752648523" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1752648523" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1752648523" rel="stylesheet">
+    
+    <link href="/css/vietnamese-fix.css?1752648523" rel="stylesheet">
+
+    <script src="/js/jquery-3.3.1.min.js?1752648523"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/3-container-optimization/3.1-create-sample-app/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1752648523"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1752648523"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/\/localhost:1313\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1752648523"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-introduce/" title="Introduction &amp; Architecture" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-introduce/">
+          <b>1. </b>Introduction &amp; Architecture
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/" title="Prerequisites &amp; Environment Setup" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-prerequiste/">
+          <b>2. </b>Prerequisites &amp; Environment Setup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/2.2-createiamrole/" title="Create IAM Roles for Lambda Container" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-prerequiste/2.2-createiamrole/">
+           <b> 2.2 </b> Create IAM Roles for Lambda Container
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-prerequiste/2.3-setup-environment/" title="Setup Development Environment" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-prerequiste/2.3-setup-environment/">
+          <b>2.3 </b>Setup Development Environment
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-container-optimization/" title="Container Image Optimization" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/3-container-optimization/">
+          <b>3. </b>Container Image Optimization
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-container-optimization/3.1-create-sample-app/" title="Create Sample Application" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/3-container-optimization/3.1-create-sample-app/">
+          <b>3.1 </b>Create Sample Application
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-container-optimization/3.2-build-container/" title="Build Optimized Container" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/3-container-optimization/3.2-build-container/">
+          <b>3.2 </b>Build Optimized Container
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-container-optimization/3.3-create-lambda/" title="Create Lambda Functions" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/3-container-optimization/3.3-create-lambda/">
+          <b>3.3 </b>Create Lambda Functions
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-container-optimization/3.4-security-practices/" title="Security Best Practices" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/3-container-optimization/3.4-security-practices/">
+          <b>3.4 </b>Security Best Practices
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-container-optimization/3.5-testing/" title="Testing Strategies" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/3-container-optimization/3.5-testing/">
+          <b>3.5 </b>Testing Strategies
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-monitoring/" title="Performance Monitoring &amp; Profiling" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/4-monitoring/">
+          <b>4. </b>Performance Monitoring &amp; Profiling
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-monitoring/4.1-deploy-test/" title="Deploy and Test" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/4-monitoring/4.1-deploy-test/">
+          <b>4.1 </b>Deploy and Test
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-caching-warmup/" title="Caching Strategies &amp; Warm-up" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/5-caching-warmup/">
+          <b>5. </b>Caching Strategies &amp; Warm-up
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/5-caching-warmup/warmup-strategies/" title="" class="dd-item ">
+        <a href="/5-caching-warmup/warmup-strategies/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-cost-analysis/" title="Cost Analysis &amp; Benchmarking" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/6-cost-analysis/">
+          <b>6. </b>Cost Analysis &amp; Benchmarking
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-production/" title="Production Deployment" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/7-production/">
+          <b>7. </b>Production Deployment
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-production/7.1-cicd-pipeline/" title="CI/CD Pipeline" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/7-production/7.1-cicd-pipeline/">
+          <b>7.1 </b>CI/CD Pipeline
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-cleanup/" title="Clean up resources" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/8-cleanup/">
+          <b>8. </b>Clean up resources
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="//localhost:1313/3-container-optimization/3.1-create-sample-app/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="//localhost:1313/vi/3-container-optimization/3.1-create-sample-app/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+     <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0" title="Migrate" Alt="web counter"   border="0" /></a>  <br>
+     <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total CLoud Journey" Alt="web counter"   border="0"   />
+     
+</left>
+<left>
+    <br>
+    <br>
+        <b> Last Updated </b> <br>
+        <i><font color=orange>30-01-2022</font></i>
+    </left>
+    <left>
+        <br>
+        <br>
+            <b> Team </b> <br>
+           
+            <i> <a href="https://www.linkedin.com/in/sutrinh/"  style="color:orange">Sử Trịnh  </a> <br>
+                <a href="https://www.linkedin.com/in/jotaguy"  style="color:orange">Gia Hưng </a> <br>
+                <a href="https://www.linkedin.com/in/hiepnguyendt"  style="color:orange">Thanh Hiệp </a>
+               
+        </i>
+        </left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>AWS Lambda Container Images Performance Optimization</a> > <a href='/3-container-optimization/'>Container Image Optimization</a> > Create Sample Application
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#create-lambda-function-code">Create Lambda Function Code</a>
+      <ul>
+        <li><a href="#1-create-main-lambda-handler">1. Create main Lambda handler</a></li>
+        <li><a href="#2-create-product-service">2. Create Product Service</a></li>
+        <li><a href="#3-create-performance-metrics">3. Create Performance Metrics</a></li>
+        <li><a href="#4-create-__init__py-files">4. Create <strong>init</strong>.py files</a></li>
+        <li><a href="#5-create-test-script">5. Create test script</a></li>
+      </ul>
+    </li>
+    <li><a href="#test-the-application">Test the Application</a>
+      <ul>
+        <li><a href="#1-run-local-tests">1. Run local tests</a></li>
+        <li><a href="#2-verify-file-structure">2. Verify file structure</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-features">Key Features</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Create Sample Application
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="overview">Overview</h2>
+<p>In this section, we will create a sample API application to demonstrate Lambda container image optimization techniques.</p>
+<h2 id="create-lambda-function-code">Create Lambda Function Code</h2>
+<h3 id="1-create-main-lambda-handler">1. Create main Lambda handler</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0086b3">cd</span> ~/lambda-container-workshop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># Create lambda_function.py file</span>
+</span></span><span style="display:flex;"><span>cat &gt; lambda_function.py <span style="color:#d14">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import json
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import os
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import time
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import boto3
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from datetime import datetime
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from src.api.product_service import ProductService
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from src.monitoring.performance_metrics import PerformanceMetrics
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"># Initialize connections outside handler for reuse
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">product_service = ProductService()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">metrics = PerformanceMetrics()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">def lambda_handler(event, context):
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    &#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    Main Lambda handler for Product API
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    &#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    start_time = time.time()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        # Log request info
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        print(f&#34;Request: {json.dumps(event)}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        # Parse request
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        http_method = event.get(&#39;httpMethod&#39;, &#39;GET&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        path = event.get(&#39;path&#39;, &#39;/&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        body = json.loads(event.get(&#39;body&#39;, &#39;{}&#39;)) if event.get(&#39;body&#39;) else {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        path_parameters = event.get(&#39;pathParameters&#39;) or {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        # Route requests
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        if path == &#39;/products&#39; and http_method == &#39;GET&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = product_service.list_products()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        elif path == &#39;/products&#39; and http_method == &#39;POST&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = product_service.create_product(body)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        elif path.startswith(&#39;/products/&#39;) and http_method == &#39;GET&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            product_id = path_parameters.get(&#39;id&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = product_service.get_product(product_id)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        elif path.startswith(&#39;/products/&#39;) and http_method == &#39;PUT&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            product_id = path_parameters.get(&#39;id&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = product_service.update_product(product_id, body)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        elif path.startswith(&#39;/products/&#39;) and http_method == &#39;DELETE&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            product_id = path_parameters.get(&#39;id&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = product_service.delete_product(product_id)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        elif path == &#39;/health&#39; and http_method == &#39;GET&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = {&#39;status&#39;: &#39;healthy&#39;, &#39;timestamp&#39;: datetime.utcnow().isoformat()}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        else:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = {&#39;error&#39;: &#39;Not Found&#39;, &#39;path&#39;: path, &#39;method&#39;: http_method}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return create_response(404, response)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        # Record metrics
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        execution_time = time.time() - start_time
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        metrics.record_execution_time(execution_time)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        return create_response(200, response)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        print(f&#34;Error: {str(e)}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        error_response = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;error&#39;: &#39;Internal Server Error&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;message&#39;: str(e),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;timestamp&#39;: datetime.utcnow().isoformat()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        return create_response(500, error_response)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">def create_response(status_code, body):
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    &#34;&#34;&#34;Create HTTP response&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    return {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;statusCode&#39;: status_code,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;headers&#39;: {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;Content-Type&#39;: &#39;application/json&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;Access-Control-Allow-Origin&#39;: &#39;*&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;Access-Control-Allow-Methods&#39;: &#39;GET,POST,PUT,DELETE,OPTIONS&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;Access-Control-Allow-Headers&#39;: &#39;Content-Type,X-Amz-Date,Authorization,X-Api-Key&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        },
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;body&#39;: json.dumps(body, default=str)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">EOF</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-create-product-service">2. Create Product Service</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">154
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">155
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">156
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">157
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">158
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">159
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">160
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">161
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">162
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># Create product service</span>
+</span></span><span style="display:flex;"><span>cat &gt; src/api/product_service.py <span style="color:#d14">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import json
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import boto3
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import uuid
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from datetime import datetime
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from typing import Dict, List, Optional
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">class ProductService:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def __init__(self):
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        self.dynamodb = boto3.resource(&#39;dynamodb&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        self.table_name = os.environ.get(&#39;PRODUCTS_TABLE&#39;, &#39;workshop-products&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            self.table = self.dynamodb.Table(self.table_name)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Warning: Could not connect to DynamoDB table {self.table_name}: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            self.table = None
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def list_products(self) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;List all products&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            if not self.table:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                return self._get_mock_products()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = self.table.scan()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            products = response.get(&#39;Items&#39;, [])
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;products&#39;: products,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;count&#39;: len(products),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;timestamp&#39;: datetime.utcnow().isoformat()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Error listing products: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return self._get_mock_products()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def get_product(self, product_id: str) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Get product by ID&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            if not self.table:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                return self._get_mock_product(product_id)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = self.table.get_item(Key={&#39;id&#39;: product_id})
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            product = response.get(&#39;Item&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            if not product:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                return {&#39;error&#39;: &#39;Product not found&#39;, &#39;id&#39;: product_id}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;product&#39;: product}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Error getting product {product_id}: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return self._get_mock_product(product_id)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def create_product(self, product_data: Dict) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Create new product&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            product_id = str(uuid.uuid4())
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            product = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;id&#39;: product_id,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;name&#39;: product_data.get(&#39;name&#39;, &#39;Unknown Product&#39;),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;description&#39;: product_data.get(&#39;description&#39;, &#39;&#39;),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;price&#39;: product_data.get(&#39;price&#39;, 0.0),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;category&#39;: product_data.get(&#39;category&#39;, &#39;general&#39;),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;created_at&#39;: datetime.utcnow().isoformat(),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;updated_at&#39;: datetime.utcnow().isoformat()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            if self.table:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                self.table.put_item(Item=product)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;product&#39;: product, &#39;message&#39;: &#39;Product created successfully&#39;}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Error creating product: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;error&#39;: &#39;Failed to create product&#39;, &#39;message&#39;: str(e)}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def update_product(self, product_id: str, product_data: Dict) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Update existing product&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            if not self.table:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                return {&#39;message&#39;: f&#39;Product {product_id} updated (mock)&#39;}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            # Check if product exists
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            response = self.table.get_item(Key={&#39;id&#39;: product_id})
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            if &#39;Item&#39; not in response:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                return {&#39;error&#39;: &#39;Product not found&#39;, &#39;id&#39;: product_id}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            # Update product
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            update_expression = &#34;SET updated_at = :updated_at&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            expression_values = {&#39;:updated_at&#39;: datetime.utcnow().isoformat()}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            for key, value in product_data.items():
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                if key != &#39;id&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                    update_expression += f&#34;, {key} = :{key}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                    expression_values[f&#39;:{key}&#39;] = value
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            self.table.update_item(
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                Key={&#39;id&#39;: product_id},
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                UpdateExpression=update_expression,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                ExpressionAttributeValues=expression_values
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            )
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;message&#39;: f&#39;Product {product_id} updated successfully&#39;}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Error updating product {product_id}: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;error&#39;: &#39;Failed to update product&#39;, &#39;message&#39;: str(e)}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def delete_product(self, product_id: str) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Delete product&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            if not self.table:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                return {&#39;message&#39;: f&#39;Product {product_id} deleted (mock)&#39;}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            self.table.delete_item(Key={&#39;id&#39;: product_id})
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;message&#39;: f&#39;Product {product_id} deleted successfully&#39;}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Error deleting product {product_id}: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;error&#39;: &#39;Failed to delete product&#39;, &#39;message&#39;: str(e)}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def _get_mock_products(self) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Return mock products for testing&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        mock_products = [
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;id&#39;: &#39;1&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;name&#39;: &#39;Sample Product 1&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;description&#39;: &#39;This is a sample product for testing&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;price&#39;: 29.99,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;category&#39;: &#39;electronics&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;created_at&#39;: &#39;2025-01-01T00:00:00Z&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            },
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;id&#39;: &#39;2&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;name&#39;: &#39;Sample Product 2&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;description&#39;: &#39;Another sample product&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;price&#39;: 49.99,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;category&#39;: &#39;books&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;created_at&#39;: &#39;2025-01-01T00:00:00Z&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        ]
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        return {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;products&#39;: mock_products,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;count&#39;: len(mock_products),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;timestamp&#39;: datetime.utcnow().isoformat(),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;note&#39;: &#39;Using mock data - DynamoDB not available&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def _get_mock_product(self, product_id: str) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Return mock product for testing&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        mock_product = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;id&#39;: product_id,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;name&#39;: f&#39;Sample Product {product_id}&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;description&#39;: &#39;This is a mock product for testing&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;price&#39;: 19.99,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;category&#39;: &#39;test&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;created_at&#39;: &#39;2025-01-01T00:00:00Z&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        return {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;product&#39;: mock_product,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;note&#39;: &#39;Using mock data - DynamoDB not available&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">EOF</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-create-performance-metrics">3. Create Performance Metrics</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># Create performance monitoring</span>
+</span></span><span style="display:flex;"><span>cat &gt; src/monitoring/performance_metrics.py <span style="color:#d14">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import time
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import psutil
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import os
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from datetime import datetime
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from typing import Dict
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">class PerformanceMetrics:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def __init__(self):
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        self.start_time = time.time()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        self.metrics = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;execution_times&#39;: [],
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;memory_usage&#39;: [],
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;cpu_usage&#39;: []
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def record_execution_time(self, execution_time: float):
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Record function execution time&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        self.metrics[&#39;execution_times&#39;].append({
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;time&#39;: execution_time,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;timestamp&#39;: datetime.utcnow().isoformat()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        })
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        print(f&#34;Execution time: {execution_time:.3f}s&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def get_memory_usage(self) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Get current memory usage&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            process = psutil.Process(os.getpid())
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            memory_info = process.memory_info()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            memory_data = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;rss&#39;: memory_info.rss,  # Resident Set Size
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;vms&#39;: memory_info.vms,  # Virtual Memory Size
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;percent&#39;: process.memory_percent(),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;timestamp&#39;: datetime.utcnow().isoformat()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            self.metrics[&#39;memory_usage&#39;].append(memory_data)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return memory_data
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Error getting memory usage: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;error&#39;: str(e)}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def get_cpu_usage(self) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Get current CPU usage&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            cpu_percent = psutil.cpu_percent(interval=0.1)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            cpu_data = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;percent&#39;: cpu_percent,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">                &#39;timestamp&#39;: datetime.utcnow().isoformat()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            self.metrics[&#39;cpu_usage&#39;].append(cpu_data)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return cpu_data
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        except Exception as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            print(f&#34;Error getting CPU usage: {e}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return {&#39;error&#39;: str(e)}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def get_container_stats(self) -&gt; Dict:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Get container performance statistics&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        return {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;uptime&#39;: time.time() - self.start_time,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;memory&#39;: self.get_memory_usage(),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;cpu&#39;: self.get_cpu_usage(),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;execution_count&#39;: len(self.metrics[&#39;execution_times&#39;]),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            &#39;avg_execution_time&#39;: self._calculate_avg_execution_time()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    def _calculate_avg_execution_time(self) -&gt; float:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#34;&#34;&#34;Calculate average execution time&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        if not self.metrics[&#39;execution_times&#39;]:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">            return 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        total_time = sum(metric[&#39;time&#39;] for metric in self.metrics[&#39;execution_times&#39;])
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        return total_time / len(self.metrics[&#39;execution_times&#39;])
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">EOF</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-create-__init__py-files">4. Create <strong>init</strong>.py files</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># Create __init__.py files for Python modules</span>
+</span></span><span style="display:flex;"><span>touch src/__init__.py
+</span></span><span style="display:flex;"><span>touch src/api/__init__.py
+</span></span><span style="display:flex;"><span>touch src/monitoring/__init__.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="5-create-test-script">5. Create test script</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># Create test script</span>
+</span></span><span style="display:flex;"><span>cat &gt; scripts/test-local.py <span style="color:#d14">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">#!/usr/bin/env python3
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import json
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import sys
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">import os
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"># Add src to path
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">sys.path.insert(0, os.path.join(os.path.dirname(__file__), &#39;..&#39;))
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">from lambda_function import lambda_handler
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">def test_health_endpoint():
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    &#34;&#34;&#34;Test health endpoint&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    event = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;httpMethod&#39;: &#39;GET&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;path&#39;: &#39;/health&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;body&#39;: None,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;pathParameters&#39;: None
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    context = {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    response = lambda_handler(event, context)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(&#34;=== Health Endpoint Test ===&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(f&#34;Status Code: {response[&#39;statusCode&#39;]}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(f&#34;Response: {response[&#39;body&#39;]}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">def test_list_products():
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    &#34;&#34;&#34;Test list products endpoint&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    event = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;httpMethod&#39;: &#39;GET&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;path&#39;: &#39;/products&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;body&#39;: None,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;pathParameters&#39;: None
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    context = {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    response = lambda_handler(event, context)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(&#34;=== List Products Test ===&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(f&#34;Status Code: {response[&#39;statusCode&#39;]}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(f&#34;Response: {response[&#39;body&#39;]}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">def test_create_product():
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    &#34;&#34;&#34;Test create product endpoint&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    product_data = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;name&#39;: &#39;Test Product&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;description&#39;: &#39;A test product created via API&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;price&#39;: 99.99,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;category&#39;: &#39;test&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    event = {
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;httpMethod&#39;: &#39;POST&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;path&#39;: &#39;/products&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;body&#39;: json.dumps(product_data),
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">        &#39;pathParameters&#39;: None
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    context = {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    response = lambda_handler(event, context)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(&#34;=== Create Product Test ===&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(f&#34;Status Code: {response[&#39;statusCode&#39;]}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(f&#34;Response: {response[&#39;body&#39;]}&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">if __name__ == &#39;__main__&#39;:
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(&#34;Testing Lambda function locally...&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    test_health_endpoint()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    test_list_products()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    test_create_product()
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">    print(&#34;Local testing completed!&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chmod +x scripts/test-local.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="test-the-application">Test the Application</h2>
+<h3 id="1-run-local-tests">1. Run local tests</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0086b3">cd</span> ~/lambda-container-workshop
+</span></span><span style="display:flex;"><span>python3 scripts/test-local.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-verify-file-structure">2. Verify file structure</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tree -I <span style="color:#d14">&#39;__pycache__&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Expected output:</p>
+<pre tabindex="0"><code>.
+├── config.json
+├── lambda_function.py
+├── requirements.txt
+├── scripts/
+│   ├── check-environment.sh
+│   └── test-local.py
+└── src/
+    ├── __init__.py
+    ├── api/
+    │   ├── __init__.py
+    │   └── product_service.py
+    └── monitoring/
+        ├── __init__.py
+        └── performance_metrics.py
+</code></pre><h2 id="key-features">Key Features</h2>
+<p>The sample application includes:</p>
+<ul>
+<li><strong>RESTful API</strong>: Complete CRUD operations for products</li>
+<li><strong>Error Handling</strong>: Comprehensive error handling and logging</li>
+<li><strong>Performance Monitoring</strong>: Built-in metrics collection</li>
+<li><strong>Mock Data</strong>: Fallback to mock data when DynamoDB is unavailable</li>
+<li><strong>Health Checks</strong>: Health endpoint for monitoring</li>
+<li><strong>Modular Design</strong>: Organized code structure for maintainability</li>
+</ul>
+
+<div class="notices info" ><p>This application is designed to work both locally and in Lambda containers, with graceful fallbacks when AWS services are not available.</p>
+</div>
+
+<p>Next, we will create optimized Docker containers for this application.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/3-container-optimization/" title="Container Image Optimization"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/3-container-optimization/3.2-build-container/" title="Build Optimized Container" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1752648523"></script>
+    <script src="/js/perfect-scrollbar.min.js?1752648523"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1752648523"></script>
+    <script src="/js/jquery.sticky.js?1752648523"></script>
+    <script src="/js/featherlight.min.js?1752648523"></script>
+    <script src="/js/highlight.pack.js?1752648523"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1752648523"></script>
+    <script src="/js/learn.js?1752648523"></script>
+    <script src="/js/hugo-learn.js?1752648523"></script>
+
+    <link href="/mermaid/mermaid.css?1752648523" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1752648523"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

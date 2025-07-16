@@ -1,0 +1,50 @@
+/* CSS để sửa lỗi hiển thị tiếng Việt */
+
+/* Đảm bảo font hỗ trợ tiếng Việt */
+body, 
+.content,
+h1, h2, h3, h4, h5, h6,
+p, li, td, th,
+.menu-item {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Đảm bảo khoảng cách đúng cho tiếng Việt */
+.content p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    word-spacing: normal;
+    letter-spacing: normal;
+}
+
+/* Sửa lỗi khoảng cách trong menu */
+.menu-item a {
+    word-spacing: normal;
+    letter-spacing: normal;
+}
+
+/* Đảm bảo code blocks hiển thị đúng */
+code, pre {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+/* Sửa lỗi hiển thị trong tables */
+table {
+    font-feature-settings: normal;
+}
+
+/* Đảm bảo breadcrumb hiển thị đúng */
+.breadcrumb {
+    word-spacing: normal;
+    letter-spacing: normal;
+}
+
+/* Sửa lỗi trong navigation */
+.nav-title {
+    word-spacing: normal;
+    letter-spacing: normal;
+}
