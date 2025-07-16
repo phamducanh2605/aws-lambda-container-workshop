@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" class="js csstransforms3d">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Hugo 0.123.7">
     <meta name="description" content="AWS Lambda Container Images Performance Optimization Workshop">
 <meta name="author" content="anhzvang2605@gmail.com">
 
-    <link rel="icon" href="/images/favicon.png" type="image/png">
+    <link rel="icon" href="/aws-lambda-container-workshop/images/favicon.png" type="image/png">
 
     <title>Container Image Optimization :: AWS Lambda Container Images Performance Optimization</title>
 
     
-    <link href="/css/nucleus.css?1752648523" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1752648523" rel="stylesheet">
-    <link href="/css/hybrid.css?1752648523" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1752648523" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1752648523" rel="stylesheet">
-    <link href="/css/auto-complete.css?1752648523" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1752648523" rel="stylesheet">
-    <link href="/css/theme.css?1752648523" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/nucleus.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/fontawesome-all.min.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/hybrid.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/featherlight.min.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/perfect-scrollbar.min.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/auto-complete.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/atom-one-dark-reasonable.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/theme.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/hugo-theme.css?1752648523" rel="stylesheet">
     
-    <link href="/css/theme-workshop.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/theme-workshop.css?1752648523" rel="stylesheet">
     
-    <link href="/css/vietnamese-fix.css?1752648523" rel="stylesheet">
+    <link href="/aws-lambda-container-workshop/css/vietnamese-fix.css?1752648523" rel="stylesheet">
 
-    <script src="/js/jquery-3.3.1.min.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/jquery-3.3.1.min.js?1752648523"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -57,14 +56,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1752648523"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1752648523"></script>
+<script type="text/javascript" src="/aws-lambda-container-workshop/js/lunr.min.js?1752648523"></script>
+<script type="text/javascript" src="/aws-lambda-container-workshop/js/auto-complete.js?1752648523"></script>
 <script type="text/javascript">
     
         var baseurl = "\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1752648523"></script>
+<script type="text/javascript" src="/aws-lambda-container-workshop/js/search.js?1752648523"></script>
 
     
   </div>
@@ -87,7 +86,7 @@
         
         
         ">
-      <a href="/1-introduce/">
+      <a href="/aws-lambda-container-workshop/1-introduce/">
           <b>1. </b>Introduction &amp; Architecture
           
             <i class="fas fa-check read-icon"></i>
@@ -113,7 +112,7 @@
         
         
         ">
-      <a href="/2-prerequiste/">
+      <a href="/aws-lambda-container-workshop/2-prerequiste/">
           <b>2. </b>Prerequisites &amp; Environment Setup
           
             <i class="fas fa-check read-icon"></i>
@@ -144,7 +143,7 @@
         
         
         ">
-      <a href="/2-prerequiste/2.2-createiamrole/">
+      <a href="/aws-lambda-container-workshop/2-prerequiste/2.2-createiamrole/">
            <b> 2.2 </b> Create IAM Roles for Lambda Container
           
             <i class="fas fa-check read-icon"></i>
@@ -172,7 +171,7 @@
         
         
         ">
-      <a href="/2-prerequiste/2.3-setup-environment/">
+      <a href="/aws-lambda-container-workshop/2-prerequiste/2.3-setup-environment/">
           <b>2.3 </b>Setup Development Environment
           
             <i class="fas fa-check read-icon"></i>
@@ -207,7 +206,7 @@
         active
         
         ">
-      <a href="/3-container-optimization/">
+      <a href="/aws-lambda-container-workshop/3-container-optimization/">
           <b>3. </b>Container Image Optimization
           
             <i class="fas fa-check read-icon"></i>
@@ -238,7 +237,7 @@
         
         
         ">
-      <a href="/3-container-optimization/3.1-create-sample-app/">
+      <a href="/aws-lambda-container-workshop/3-container-optimization/3.1-create-sample-app/">
           <b>3.1 </b>Create Sample Application
           
             <i class="fas fa-check read-icon"></i>
@@ -266,7 +265,7 @@
         
         
         ">
-      <a href="/3-container-optimization/3.2-build-container/">
+      <a href="/aws-lambda-container-workshop/3-container-optimization/3.2-build-container/">
           <b>3.2 </b>Build Optimized Container
           
             <i class="fas fa-check read-icon"></i>
@@ -294,7 +293,7 @@
         
         
         ">
-      <a href="/3-container-optimization/3.3-create-lambda/">
+      <a href="/aws-lambda-container-workshop/3-container-optimization/3.3-create-lambda/">
           <b>3.3 </b>Create Lambda Functions
           
             <i class="fas fa-check read-icon"></i>
@@ -322,7 +321,7 @@
         
         
         ">
-      <a href="/3-container-optimization/3.4-security-practices/">
+      <a href="/aws-lambda-container-workshop/3-container-optimization/3.4-security-practices/">
           <b>3.4 </b>Security Best Practices
           
             <i class="fas fa-check read-icon"></i>
@@ -350,7 +349,7 @@
         
         
         ">
-      <a href="/3-container-optimization/3.5-testing/">
+      <a href="/aws-lambda-container-workshop/3-container-optimization/3.5-testing/">
           <b>3.5 </b>Testing Strategies
           
             <i class="fas fa-check read-icon"></i>
@@ -385,7 +384,7 @@
         
         
         ">
-      <a href="/4-monitoring/">
+      <a href="/aws-lambda-container-workshop/4-monitoring/">
           <b>4. </b>Performance Monitoring &amp; Profiling
           
             <i class="fas fa-check read-icon"></i>
@@ -416,7 +415,7 @@
         
         
         ">
-      <a href="/4-monitoring/4.1-deploy-test/">
+      <a href="/aws-lambda-container-workshop/4-monitoring/4.1-deploy-test/">
           <b>4.1 </b>Deploy and Test
           
             <i class="fas fa-check read-icon"></i>
@@ -451,7 +450,7 @@
         
         
         ">
-      <a href="/5-caching-warmup/">
+      <a href="/aws-lambda-container-workshop/5-caching-warmup/">
           <b>5. </b>Caching Strategies &amp; Warm-up
           
             <i class="fas fa-check read-icon"></i>
@@ -476,7 +475,7 @@
   
     
       <li data-nav-id="/5-caching-warmup/warmup-strategies/" title="" class="dd-item ">
-        <a href="/5-caching-warmup/warmup-strategies/">
+        <a href="/aws-lambda-container-workshop/5-caching-warmup/warmup-strategies/">
         
         <i class="fas fa-check read-icon"></i>
         </a>
@@ -508,7 +507,7 @@
         
         
         ">
-      <a href="/6-cost-analysis/">
+      <a href="/aws-lambda-container-workshop/6-cost-analysis/">
           <b>6. </b>Cost Analysis &amp; Benchmarking
           
             <i class="fas fa-check read-icon"></i>
@@ -534,7 +533,7 @@
         
         
         ">
-      <a href="/7-production/">
+      <a href="/aws-lambda-container-workshop/7-production/">
           <b>7. </b>Production Deployment
           
             <i class="fas fa-check read-icon"></i>
@@ -565,7 +564,7 @@
         
         
         ">
-      <a href="/7-production/7.1-cicd-pipeline/">
+      <a href="/aws-lambda-container-workshop/7-production/7.1-cicd-pipeline/">
           <b>7.1 </b>CI/CD Pipeline
           
             <i class="fas fa-check read-icon"></i>
@@ -600,7 +599,7 @@
         
         
         ">
-      <a href="/8-cleanup/">
+      <a href="/aws-lambda-container-workshop/8-cleanup/">
           <b>8. </b>Clean up resources
           
             <i class="fas fa-check read-icon"></i>
@@ -836,7 +835,7 @@
 <li>Set up monitoring and alerting for container-based Lambda functions</li>
 </ul>
 <h2 id="hands-on-sections">Hands-on Sections</h2>
-<h3 id="31-create-sample-application31-create-sample-app"><a href="/3-container-optimization/3.1-create-sample-app/">3.1 Create Sample Application</a></h3>
+<h3 id="31-create-sample-application31-create-sample-app"><a href="/aws-lambda-container-workshop/3-container-optimization/3.1-create-sample-app/">3.1 Create Sample Application</a></h3>
 <p>Build a complete Product API application with:</p>
 <ul>
 <li>Lambda function handler with proper routing</li>
@@ -844,7 +843,7 @@
 <li>Performance metrics integration</li>
 <li>Local testing capabilities</li>
 </ul>
-<h3 id="32-build-container-images32-build-container"><a href="/3-container-optimization/3.2-build-container/">3.2 Build Container Images</a></h3>
+<h3 id="32-build-container-images32-build-container"><a href="/aws-lambda-container-workshop/3-container-optimization/3.2-build-container/">3.2 Build Container Images</a></h3>
 <p>Create optimized Docker containers:</p>
 <ul>
 <li>Base Dockerfile for initial implementation</li>
@@ -852,7 +851,7 @@
 <li>Build and push images to Amazon ECR</li>
 <li>Compare image sizes and test locally</li>
 </ul>
-<h3 id="33-create-lambda-functions33-create-lambda"><a href="/3-container-optimization/3.3-create-lambda/">3.3 Create Lambda Functions</a></h3>
+<h3 id="33-create-lambda-functions33-create-lambda"><a href="/aws-lambda-container-workshop/3-container-optimization/3.3-create-lambda/">3.3 Create Lambda Functions</a></h3>
 <p>Deploy Lambda functions from containers:</p>
 <ul>
 <li>Create IAM roles and permissions</li>
@@ -1885,7 +1884,7 @@
 </tbody>
 </table>
 <hr>
-<p><strong>Next</strong>: <a href="/4-monitoring/">Performance Monitoring &amp; Profiling</a></p>
+<p><strong>Next</strong>: <a href="/aws-lambda-container-workshop/4-monitoring/">Performance Monitoring &amp; Profiling</a></p>
 
 
 
@@ -2233,10 +2232,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/2-prerequiste/2.3-setup-environment/" title="Setup Development Environment"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/aws-lambda-container-workshop/2-prerequiste/2.3-setup-environment/" title="Setup Development Environment"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/3-container-optimization/3.1-create-sample-app/" title="Create Sample Application" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/aws-lambda-container-workshop/3-container-optimization/3.1-create-sample-app/" title="Create Sample Application" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -2246,18 +2245,18 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1752648523"></script>
-    <script src="/js/perfect-scrollbar.min.js?1752648523"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1752648523"></script>
-    <script src="/js/jquery.sticky.js?1752648523"></script>
-    <script src="/js/featherlight.min.js?1752648523"></script>
-    <script src="/js/highlight.pack.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/clipboard.min.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/perfect-scrollbar.min.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/perfect-scrollbar.jquery.min.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/jquery.sticky.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/featherlight.min.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/highlight.pack.js?1752648523"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1752648523"></script>
-    <script src="/js/learn.js?1752648523"></script>
-    <script src="/js/hugo-learn.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/modernizr.custom-3.6.0.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/learn.js?1752648523"></script>
+    <script src="/aws-lambda-container-workshop/js/hugo-learn.js?1752648523"></script>
 
-    <link href="/mermaid/mermaid.css?1752648523" rel="stylesheet" />
+    <link href="/aws-lambda-container-workshop/mermaid/mermaid.css?1752648523" rel="stylesheet" />
     <script src="/mermaid/mermaid.js?1752648523"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
