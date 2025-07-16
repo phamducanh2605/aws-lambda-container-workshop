@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Quy trình CI/CD (CI/CD Pipeline) Setup on Tối ưu hóa hiệu suất AWS Lambda Container Images</title>
-    <link>//localhost:1313/vi/7-production/7.1-cicd-pipeline/</link>
+    <link>https://phamducanh2605.github.io/aws-lambda-container-workshop/vi/7-production/7.1-cicd-pipeline/</link>
     <description>Recent content in Quy trình CI/CD (CI/CD Pipeline) Setup on Tối ưu hóa hiệu suất AWS Lambda Container Images</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="//localhost:1313/vi/7-production/7.1-cicd-pipeline/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://phamducanh2605.github.io/aws-lambda-container-workshop/vi/7-production/7.1-cicd-pipeline/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

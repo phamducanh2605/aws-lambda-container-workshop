@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tạo IAM Role cho Lambda Container on Tối ưu hóa hiệu suất AWS Lambda Container Images</title>
-    <link>//localhost:1313/vi/2-prerequiste/2.2-createiamrole/</link>
+    <link>https://phamducanh2605.github.io/aws-lambda-container-workshop/vi/2-prerequiste/2.2-createiamrole/</link>
     <description>Recent content in Tạo IAM Role cho Lambda Container on Tối ưu hóa hiệu suất AWS Lambda Container Images</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="//localhost:1313/vi/2-prerequiste/2.2-createiamrole/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://phamducanh2605.github.io/aws-lambda-container-workshop/vi/2-prerequiste/2.2-createiamrole/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

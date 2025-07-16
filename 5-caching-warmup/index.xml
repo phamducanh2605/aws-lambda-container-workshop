@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Caching Strategies &amp; Warm-up on AWS Lambda Container Images Performance Optimization</title>
-    <link>//localhost:1313/5-caching-warmup/</link>
+    <link>https://phamducanh2605.github.io/aws-lambda-container-workshop/5-caching-warmup/</link>
     <description>Recent content in Caching Strategies &amp; Warm-up on AWS Lambda Container Images Performance Optimization</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
-    <atom:link href="//localhost:1313/5-caching-warmup/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://phamducanh2605.github.io/aws-lambda-container-workshop/5-caching-warmup/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>//localhost:1313/5-caching-warmup/warmup-strategies/</link>
+      <link>https://phamducanh2605.github.io/aws-lambda-container-workshop/5-caching-warmup/warmup-strategies/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/5-caching-warmup/warmup-strategies/</guid>
+      <guid>https://phamducanh2605.github.io/aws-lambda-container-workshop/5-caching-warmup/warmup-strategies/</guid>
       <description>Warm-up Strategies 1. Provisioned Concurrency Configuration 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 # scripts/configure-provisioned-concurrency.sh #!/bin/bash FUNCTION_NAME=${1:-workshop-product-api} CONCURRENCY=${2:-10} echo &amp;#34;Configuring provisioned concurrency for ${FUNCTION_NAME}...&amp;#34; # Create or update provisioned concurrency aws lambda put-provisioned-concurrency-config \ --function-name ${FUNCTION_NAME} \ --provisioned-concurrency-executions ${CONCURRENCY} \ --qualifier &amp;#39;$LATEST&amp;#39; echo &amp;#34;Provisioned concurrency configured: ${CONCURRENCY} instances&amp;#34; # Monitor provisioned concurrency status aws lambda get-provisioned-concurrency-config \ --function-name ${FUNCTION_NAME} \ --qualifier &amp;#39;$LATEST&amp;#39; 2.</description>
     </item>
   </channel>
